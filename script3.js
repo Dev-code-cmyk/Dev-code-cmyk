@@ -56,37 +56,37 @@ const state = {
 // IMPORTANT: Corrected thumbnail paths to match the provided frame_XX.png files
 const framesData = [
     {
-        id: 'frame_01', thumbnail: 'frames/frame1.png', frameSrc: 'frames/frame1.png',
+        id: 'frame1', thumbnail: 'frame1.png', frameSrc: 'frames/frame1.png',
         maskData: { type: 'polygon', points: [ // Rounded rectangle
             [0.25, 0.08], [0.75, 0.08], [0.75, 0.92], [0.25, 0.92]
         ], bbox: {x: 0.25, y: 0.08, width: 0.5, height: 0.84} }
     },
     {
-        id: 'frame_02', thumbnail: 'frames/frame_02.png', frameSrc: 'frames/frame_02.png',
+        id: 'frame2', thumbnail: 'frame2.png', frameSrc: 'frames/frame2.png',
         maskData: { type: 'polygon', points: [ // Spade shape (simplified)
             [0.5, 0.17], [0.8, 0.35], [0.8, 0.65], [0.5, 0.83], [0.2, 0.65], [0.2, 0.35]
         ], bbox: {x: 0.2, y: 0.17, width: 0.6, height: 0.66} }
     },
     {
-        id: 'frame_03', thumbnail: 'frames/frame_03.png', frameSrc: 'frames/frame_03.png',
+        id: 'frame3', thumbnail: 'frame3.png', frameSrc: 'frames/frame3.png',
         maskData: { type: 'polygon', points: [ // Diamond shape
             [0.5, 0.18], [0.8, 0.5], [0.5, 0.82], [0.2, 0.5]
         ], bbox: {x: 0.2, y: 0.18, width: 0.6, height: 0.64} }
     },
     {
-        id: 'frame_04', thumbnail: 'frames/frame_04.png', frameSrc: 'frames/frame_04.png',
+        id: 'frame4', thumbnail: 'frame4.png', frameSrc: 'frames/frame4.png',
         maskData: { type: 'polygon', points: [ // Oval
             [0.34, 0.28], [0.66, 0.28], [0.66, 0.72], [0.34, 0.72]
         ], bbox: {x: 0.34, y: 0.28, width: 0.32, height: 0.44} }
     },
     {
-        id: 'frame_05', thumbnail: 'frames/frame_05.png', frameSrc: 'frames/frame_05.png',
+        id: 'frame5', thumbnail: 'frame5.png', frameSrc: 'frames/frame5.png',
         maskData: { type: 'polygon', points: [ // Trapezoid/Pentagon
             [0.3, 0.2], [0.7, 0.2], [0.75, 0.75], [0.25, 0.75]
         ], bbox: {x: 0.25, y: 0.2, width: 0.5, height: 0.55} }
     },
     {
-        id: 'frame_06', thumbnail: 'frames/frame_06.png', frameSrc: 'frames/frame_06.png',
+        id: 'frame6', thumbnail: 'frame6.png', frameSrc: 'frames/frame6.png',
         maskData: { type: 'polygon', points: [ // Oval
             [0.37, 0.25], [0.63, 0.25], [0.63, 0.75], [0.37, 0.75]
         ], bbox: {x: 0.37, y: 0.25, width: 0.26, height: 0.5} }
