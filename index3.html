@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VilayashPhotoFrame</title>
+    <link rel="stylesheet" href="./style3.css">
+    <!-- html2canvas is no longer needed as we're drawing directly onto a new canvas for download -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script> -->
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="header-content">
+                <h1>VilayashPhotoFrame</h1>
+                <div class="theme-toggle">
+                    <button id="themeToggleBtn" aria-label="Toggle day/night mode">
+                        ☀️
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Middle Section: Contains main interactive area and the instruction text area -->
+        <div class="middle-section">
+            <!-- Main Interactive Area: Fixed height (55vh), contains Preview (65% width) and Buttons Sidebar (35% width) -->
+            <div class="main-interactive-area">
+                <section class="preview-section">
+                    <div class="frame-container" id="frameContainer">
+                        <!-- Canvas for drawing the live preview (will be visible in active mode) -->
+                        <canvas id="previewCanvas"></canvas>
+                        <!-- Frame overlay (will be visible in active mode) -->
+                        <img src="" alt="Selected Frame" class="frame-overlay" id="frameOverlay">
+                        <!-- Resolution text (will be visible in active mode) -->
+                        <span id="currentPreviewResolution">1080x1920</span>
+
+                        <!-- This div is the initial static overlay, covering canvas/frame -->
+                        <div class="initial-preview-overlay" id="initialPreviewOverlay">
+                            <p class="initial-prompt">LIVE PREVIEW SECTION</p>
+                            <p class="initial-instruction">WHEN CLICKED ON ANY BUTTONS<br>PROPERTIES OPTION APPLY.<br>APPLY HERE.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="controls-section">
+                    <div class="controls-wrapper">
+                        <!-- Accordion Buttons (Top Level) -->
+                        <div class="main-buttons">
+                            <button class="control-button" data-target="frame-controls">PHOTO-FRAME</button>
+                            <button class="control-button" data-target="upload-controls">UPLOAD-IMAGE</button>
+                            <button class="control-button" data-target="img-size-controls">IMG-SIZE</button>
+                            <button class="control-button" data-target="pan-x-controls">PAN-X</button>
+                            <button class="control-button" data-target="pan-y-controls">PAN-Y</button>
+                            <button class="control-button" id="downloadBtn">DOWNLOAD-PNG</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Scrollable Adjustable Properties Section -->
+            <div class="adjustable-properties-container" id="adjustablePropertiesContainer">
+                <!-- Accordion Content Panels - These will appear here when respective buttons are clicked -->
+                <div class="accordion-panel" id="frame-controls">
+                    <h3>Output Aspect Ratio</h3>
+                    <div class="aspect-ratio-selection">
+                        <button id="ratioPortrait" data-ratio="9/16" class="ratio-btn selected">Portrait (1080x1920)</button>
+                    </div>
+                    <h3>Choose Frame</h3>
+                    <div class="frame-gallery" id="frameGallery">
+                        <!-- Frame thumbnails will be injected here by JavaScript -->
+                    </div>
+                    <div class="action-buttons-group">
+                        <button class="reset-button" data-reset-target="full">RESET ALL</button>
+                    </div>
+                </div>
+
+                <div class="accordion-panel" id="upload-controls">
+                    <h3>Upload Your Image</h3>
+                    <p class="warning-note">
+                        <strong>CRITICAL:</strong> For your uploaded image to be visible *inside* the frame's opening, <br>
+                        the selected frame's central area **MUST be transparent** (PNG with alpha channel).<br>
+                        (Upload is enabled after you choose a frame)
+                    </p>
+                    <div class="input-group">
+                        <input type="file" id="imageUpload" accept="image/*" disabled>
+                        <button class="upload-btn" disabled>Choose File</button>
+                        <span id="fileNameDisplay" class="file-name">No file chosen</span>
+                    </div>
+                    <div class="action-buttons-group">
+                        <button class="reset-button" data-reset-target="image">RESET IMAGE</button>
+                    </div>
+                </div>
+
+                <div class="accordion-panel" id="img-size-controls">
+                    <h3>Image Size Adjustment</h3>
+                    <div class="adjustment-group">
+                        <label for="fitCover">Fit/Cover:</label>
+                        <select id="fitCover" disabled>
+                            <option value="contain">Fit (Contain)</option>
+                            <option value="cover">Cover</option>
+                        </select>
+                    </div>
+                    <div class="adjustment-group">
+                        <label for="imageZoom">Zoom:</label>
+                        <input type="range" id="imageZoom" min="50" max="200" value="100" disabled>
+                        <span id="zoomValue">100%</span>
+                    </div>
+                    <div class="action-buttons-group">
+                        <button class="reset-button" data-reset-target="image-adjustments">RESET ADJUSTMENTS</button>
+                    </div>
+                </div>
+
+                <div class="accordion-panel" id="pan-x-controls">
+                    <h3>Pan Horizontal (X-Axis)</h3>
+                    <div class="adjustment-group">
+                        <label for="imagePosX">Pan X:</label>
+                        <input type="range" id="imagePosX" min="-50" max="50" value="0" disabled>
+                        <span id="posXValue">0%</span>
+                    </div>
+                    <div class="action-buttons-group">
+                        <button class="reset-button" data-reset-target="image-adjustments">RESET PAN</button>
+                    </div>
+                </div>
+
+                <div class="accordion-panel" id="pan-y-controls">
+                    <h3>Pan Vertical (Y-Axis)</h3>
+                    <div class="adjustment-group">
+                        <label for="imagePosY">Pan Y:</label>
+                        <input type="range" id="imagePosY" min="-50" max="50" value="0" disabled>
+                        <span id="posYValue">0%</span>
+                    </div>
+                    <div class="action-buttons-group">
+                        <button class="reset-button" data-reset-target="image-adjustments">RESET PAN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>VilayashPhotoFrame@2025 Copyright</p>
+        </footer>
+    </div>
+    <script src="./script3.js"></script>
+</body>
+</html>

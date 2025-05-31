@@ -1,0 +1,636 @@
+/* --- Root Variables for Theming --- */
+/* Colors from your image */
+:root {
+    --header-footer-bg-start: #00BCD4; /* Lighter blue/cyan */
+    --header-footer-bg-end: #0097A7;   /* Darker blue/cyan */
+    --live-preview-bg: #6D554D;       /* Brown from image (used for preview-section outer background) */
+    --live-preview-border: #FF0000;   /* Red border from image */
+    --control-button-bg: #2196F3;     /* Blue from image */
+    --control-button-hover: #1976D2;  /* Darker blue */
+    --control-button-active: #1565C0; /* Even darker blue */
+    --control-panel-bg: #4DD0E1;      /* Lighter teal for right sidebar */
+    --accordion-panel-bg: #E0F7FA;    /* Very light cyan for active accordion content */
+    --text-color-light: #FFFFFF;
+    --text-color-dark: #000000;       /* For dark text on light backgrounds */
+    --warning-bg: #ffe0b2;
+    --warning-text: #e65100;
+
+    /* Default (light mode) */
+    --primary-color: var(--control-button-bg); /* Used for borders/accents */
+    --secondary-color: var(--text-color-dark); /* For headings */
+    --accent-color: #E74C3C; /* Reset button color */
+    --border-color: rgba(0, 0, 0, 0.1); /* Subtle borders */
+
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    --transition-speed: 0.3s;
+    
+    /* Layout heights */
+    --header-height: 5vh;   /* 5% of viewport height */
+    --footer-height: 5vh;   /* 5% of viewport height */
+    --main-interactive-area-height: 55vh; /* 55% of viewport height */
+
+    /* Font/Padding/Size variables for compact look */
+    --main-button-padding: 8px 12px; /* Smaller main buttons */
+    --main-button-font-size: 1rem;
+    --sub-button-padding: 6px 10px; /* Smaller sub-buttons */
+    --sub-button-font-size: 0.8rem;
+    --label-font-size: 0.85rem;
+    --value-font-size: 0.85rem;
+    --header-title-font-size: 1.8rem; /* Adjusted for smaller header height */
+    --preview-text-size: 1.1rem; /* Smaller text in live preview */
+
+    /* Define control group background variable */
+    --control-group-bg: #F5F5F5; /* A very light gray for input groups/galleries */
+}
+
+/* Dark Mode Adaptation */
+body[data-theme='dark'] {
+    --header-footer-bg-start: #005662;
+    --header-footer-bg-end: #00363D;
+    --live-preview-bg: #4A3A36;
+    --live-preview-border: #BB0000;
+    --control-button-bg: #0D47A1;
+    --control-button-hover: #082C6A;
+    --control-button-active: #051A40;
+    --control-panel-bg: #004D40;
+    --accordion-panel-bg: #1A2E35;
+    --text-color-light: #E0E0E0;
+    --text-color-dark: #FFFFFF;
+
+    --primary-color: var(--control-button-bg);
+    --secondary-color: var(--text-color-light);
+    --accent-color: #C0392B;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+
+    /* Dark mode control group background */
+    --control-group-bg: #2B3C44;
+}
+
+
+/* General Reset & Body Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%; /* Ensure html and body take full viewport height */
+    overflow: hidden; /* Prevent native body scroll */
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.4; /* Slightly tighter line height */
+    color: var(--text-color-dark);
+    background-color: var(--accordion-panel-bg); /* Default background matches accordion for seamless transitions */
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+/* App Container - Main Flex Column */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Fill viewport height */
+    overflow: hidden; /* Contains children */
+}
+
+/* Header */
+header {
+    flex-shrink: 0; /* Ensures header always takes its specified height */
+    height: var(--header-height);
+    background: linear-gradient(to right, var(--header-footer-bg-start), var(--header-footer-bg-end));
+    color: var(--text-color-light);
+    box-shadow: var(--shadow);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 0 1rem;
+    transition: background var(--transition-speed) ease;
+}
+
+.header-content {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+header h1 {
+    font-size: var(--header-title-font-size);
+    font-weight: bold;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5); /* Slightly smaller text-shadow */
+    letter-spacing: 0.5px; /* Tighter letter spacing */
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+#themeToggleBtn {
+    background: none;
+    border: none;
+    font-size: 1.3rem; /* Further reduced icon size */
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    color: var(--text-color-light);
+    transition: color var(--transition-speed) ease, transform 0.2s ease;
+}
+
+#themeToggleBtn:hover {
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Middle Section: Takes remaining vertical space between header and footer */
+.middle-section {
+    display: flex;
+    flex-direction: column; /* Stack vertically */
+    flex-grow: 1; /* Takes all available height */
+    overflow: hidden; /* Contains its children */
+}
+
+/* Main Interactive Area: Fixed height (55vh) and horizontal flex for preview/buttons sidebar */
+.main-interactive-area {
+    flex-shrink: 0;
+    height: var(--main-interactive-area-height); /* Fixed height */
+    width: 100%; /* Ensure it takes full width */
+    display: flex;
+    flex-direction: row; /* Always side-by-side as per the image layout */
+    overflow: hidden; /* Important for containing preview and controls */
+}
+
+
+/* Preview Section (Left Column) */
+.preview-section {
+    flex: 0 0 65%; /* 65% width */
+     background-color: var(--live-preview-bg);/*  Outer brown background as per original image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-right: 0px solid var(--live-preview-border);
+    border-left: 0px solid var(--live-preview-border);
+    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+
+
+.frame-container {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    aspect-ratio: 9 / 16; /* Fixed to WhatsApp status size */
+    background-color: transparent; /* This container itself is transparent */
+    overflow: hidden; /* CRITICAL: This clips the inner content */
+    border-radius: 0;
+    box-shadow: none;
+    transition: aspect-ratio var(--transition-speed) ease-out;
+}
+
+
+
+.initial-preview-overlay .initial-prompt {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 10px;
+    user-select: none; /* Prevent text selection */
+}
+.initial-preview-overlay .initial-instruction {
+    font-size: 0.9rem;
+    color: black;
+    line-height: 1.3;
+    user-select: none; /* Prevent text selection */
+}
+/* Dark mode for the initial text placeholder */
+body[data-theme='dark'] .initial-preview-overlay {
+    background-color: #222; /* Darker background */
+    border-color: #888;
+}
+body[data-theme='dark'] .initial-preview-overlay .initial-prompt,
+body[data-theme='dark'] .initial-preview-overlay .initial-instruction {
+    color: #EEE; /* Lighter text */
+}
+
+/* NEW: Styles for the Canvas element */
+#previewCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Make canvas fill its frame-container */
+    height: 100%; /* Make canvas fill its frame-container */
+    display: block; /* Always block for canvas */
+    background-color: transparent; /* Canvas content drawn by JS */
+    z-index: 1; /* Below frame-overlay and initial-preview-overlay */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth transition */
+}
+
+/* Styles for the resolution text span */
+#currentPreviewResolution {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3; /* Always on top */
+    color: var(--text-color-light);
+    font-size: var(--preview-text-size);
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+    pointer-events: none; /* Allows clicks to pass through to elements below */
+    display: none; /* Hidden by default, shown by JS when user image is absent */
+}
+
+/* The frame overlay */
+.frame-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: fill; /* Ensures frame fills its container */
+    pointer-events: none; /* Allows clicks to pass through to elements below */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s ease; /* Smooth transition */
+    z-index: 2; /* On top of the canvas */
+}
+.frame-overlay.active { /* Toggled by JS when a frame is selected */
+    opacity: 1;
+}
+
+/* NEW: State for frame-container when active preview mode is on */
+/* This class hides the initial overlay and shows the canvas/frame */
+.frame-container.active-preview-mode #initialPreviewOverlay {
+    opacity: 0; /* Fade out initial overlay */
+    pointer-events: none; /* CRITICAL: Make it unclickable once hidden */
+}
+.frame-container.active-preview-mode #previewCanvas {
+    opacity: 1; /* Fade in canvas */
+}
+/* FrameOverlay visibility handled by its own '.active' class, not this parent mode */
+
+
+/* Controls Section (Right Buttons Sidebar) */
+.controls-section {
+    flex: 0 0 35%; 
+    background-color: var(--control-panel-bg);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    transition: background-color var(--transition-speed) ease;
+    overflow-y: hidden; 
+    padding: 10px; 
+}
+
+.controls-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; 
+    flex-grow: 1; 
+}
+
+.main-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; 
+}
+
+.control-button, #downloadBtn {
+    width: 100%;
+    padding: var(--main-button-padding); 
+    background-color: var(--control-button-bg);
+    color: var(--text-color-light);
+    font-size: var(--main-button-font-size); 
+    font-weight: bold;
+    text-align: center; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    letter-spacing: 0.5px;
+}
+
+.control-button:hover:not(.active):not(:disabled) {
+    background-color: var(--control-button-hover);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.control-button.active {
+    background-color: var(--control-button-active);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.4);
+}
+.control-button:disabled, #downloadBtn:disabled {
+    background-color: #888;
+    color: #CCC;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+#downloadBtn {
+    background-color: var(--control-button-bg);
+}
+#downloadBtn:hover:not(:disabled) {
+    background-color: var(--control-button-hover);
+}
+
+
+/* Adjustable Properties Container */
+.adjustable-properties-container {
+    flex-grow: 1; 
+    overflow-y: auto; 
+    background-color: var(--accordion-panel-bg); 
+    padding: 15px; 
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: background-color var(--transition-speed) ease;
+    display: flex; 
+    flex-direction: column;
+    justify-content: flex-start; 
+    align-items: center;
+    text-align: center;
+}
+
+/* Accordion Panels */
+.accordion-panel {
+    background-color: var(--accordion-panel-bg); 
+    border-radius: 5px;
+    padding: 10px; 
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+    display: none; 
+    flex-direction: column;
+    gap: 8px; 
+    width: 100%; 
+    max-width: 600px; 
+    margin: 0 auto; 
+    transition: background-color var(--transition-speed) ease;
+}
+.accordion-panel.active {
+    display: flex; 
+}
+
+.accordion-panel h3 {
+    font-size: 1rem; 
+    color: var(--secondary-color);
+    border-bottom: 1px solid var(--primary-color); 
+    padding-bottom: 3px; 
+    margin-bottom: 5px; 
+}
+
+/* Warning Note */
+.warning-note {
+    background-color: var(--warning-bg);
+    color: var(--warning-text);
+    border: 1px solid var(--warning-text);
+    border-radius: 5px;
+    padding: 6px 10px; 
+    font-size: 0.75rem; 
+    line-height: 1.2;
+    text-align: center;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+/* Input Group */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px; 
+}
+.input-group input[type="file"] {
+    display: none;
+}
+.upload-btn {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    padding: var(--sub-button-padding); 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--sub-button-font-size); 
+    transition: background-color var(--transition-speed) ease;
+    align-self: center; 
+}
+.upload-btn:hover:not(:disabled) {
+    background-color: var(--control-button-hover);
+}
+.file-name {
+    padding: 4px 0; 
+    color: var(--text-color-dark);
+    font-size: 0.75rem; 
+    text-align: center; 
+}
+
+
+/* Frame Gallery */
+.frame-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); 
+    gap: 8px; 
+    padding: 8px; 
+    background-color: var(--control-group-bg); 
+    border-radius: 5px;
+    box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.05);
+    max-height: 200px; 
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+.frame-thumbnail {
+    width: 70px; 
+    height: calc(70px * 16 / 9); 
+    border: 1px solid transparent; 
+    border-radius: 2px;
+    background-color: #eee;
+    cursor: pointer; 
+}
+body[data-theme='dark'] .frame-thumbnail {
+    background-color: #444;
+}
+.frame-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+    pointer-events: none; 
+}
+.frame-thumbnail.selected {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+.frame-thumbnail:hover:not(.selected) {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+}
+
+
+/* Aspect Ratio Selection */
+.aspect-ratio-selection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 5px;
+    background-color: var(--control-group-bg); 
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+.ratio-btn {
+    flex-grow: 1;
+    padding: var(--sub-button-padding);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--control-panel-bg);
+    color: var(--secondary-color);
+    font-size: var(--sub-button-font-size);
+    font-weight: bold;
+    cursor: default; 
+    opacity: 0.9;
+    box-shadow: none;
+    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+.ratio-btn.selected {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border-color: var(--primary-color);
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Adjustment Groups (sliders) */
+.adjustment-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background-color: var(--control-group-bg); 
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+.adjustment-group label {
+    flex-basis: 50px;
+    font-weight: bold;
+    color: var(--secondary-color);
+    font-size: var(--label-font-size);
+    transition: color var(--transition-speed) ease;
+}
+.adjustment-group input[type="range"] {
+    flex-grow: 1;
+    height: 4px;
+    background: var(--primary-color);
+    outline: none;
+    opacity: 0.9;
+    border-radius: 2px;
+    transition: opacity var(--transition-speed) ease, background var(--transition-speed) ease;
+    cursor: grab;
+}
+.adjustment-group input[type="range"]::-webkit-slider-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    cursor: grab;
+    border: 1px solid var(--accordion-panel-bg);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    transition: background var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+.adjustment-group input[type="range"]:disabled {
+    background: #e0e0e0;
+    cursor: not-allowed;
+}
+.adjustment-group input[type="range"]:disabled::-webkit-slider-thumb {
+    background: #b0b0b0;
+    cursor: not-allowed;
+}
+
+.adjustment-group select {
+    flex-grow: 1;
+    padding: 4px;
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    background-color: var(--accordion-panel-bg);
+    color: var(--text-color-dark);
+    font-size: var(--sub-button-font-size);
+    cursor: pointer;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M287%2C197.9%20L146.2%2C57.1%20L5.4%2C197.9%20z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 0.5em top 50%, 0 0;
+    background-size: 0.5em auto, 100%;
+    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+body[data-theme='dark'] .adjustment-group select {
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23fff%22%20d%3D%22M287%2C197.9%20L146.2%2C57.1%20L5.4%2C197.9%20z%22%2F%3E%3C%2Fsvg%3E');
+}
+
+.adjustment-group select:disabled {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+}
+
+
+.adjustment-group span {
+    width: 30px;
+    text-align: right;
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: var(--value-font-size);
+    transition: color var(--transition-speed) ease;
+}
+
+/* Action Buttons Group (for Reset) */
+.action-buttons-group {
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-color);
+}
+.reset-button {
+    padding: var(--sub-button-padding);
+    background-color: var(--accent-color);
+    color: var(--text-color-light);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: var(--sub-button-font-size);
+    font-weight: bold;
+    transition: background-color var(--transition-speed) ease, transform 0.2s ease;
+}
+.reset-button:hover:not(:disabled) {
+    background-color: #c0392b;
+    transform: translateY(-1px);
+}
+.reset-button:disabled {
+    background-color: #888;
+    color: #CCC;
+    cursor: not-allowed;
+}
+
+
+/* Footer */
+footer {
+    flex-shrink: 0;
+    height: var(--footer-height);
+    background: linear-gradient(to left, var(--header-footer-bg-start), var(--header-footer-bg-end));
+    color: var(--text-color-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    transition: background var(--transition-speed) ease;
+}
+footer p {
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+}
